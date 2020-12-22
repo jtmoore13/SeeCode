@@ -1,0 +1,223 @@
+from allPurpose import *
+from listClass import List
+from settings import *
+from infoClass import Info
+from smallVarClass import SmallVar
+from loopsClass import ForEachLoop
+from loopsClass import ForLoopRange
+from loopsClass import WhileLoop
+import signal, os
+
+
+# makes the canvas for the animation
+def make_canvas(width, height):
+    top = tkinter.Tk()
+    top.title('SeeCode')
+    canvas = tkinter.Canvas(top, width=width + 1, height=height + 1)
+    canvas.configure(bg=BACKGROUND)
+    canvas.create_line(VAR_SECTION_X, CONTAINER_SECTION_Y, VAR_SECTION_X, CANVAS_HEIGHT, fill='gray20', dash=(4, 4))
+    canvas.create_text((CANVAS_WIDTH+VAR_SECTION_X)/2, VAR_SECTION_Y-10, text='str/int/bool',
+                       font=("Courier", 17, 'italic'), fill='gray35')
+    canvas.create_line(0, CONTAINER_SECTION_Y, CANVAS_WIDTH, CONTAINER_SECTION_Y, fill='gray20', dash=(4, 4))
+    canvas.create_text(15, CONTAINER_SECTION_Y-10, text='lists', font=("Courier", 17, 'italic'),
+                       fill='gray35', anchor=tkinter.W)
+    canvas.create_text(15, 65, text='loops', font=("Courier", 17, 'italic'),
+                       fill='gray35', anchor=tkinter.W)
+    canvas.pack()
+    return canvas
+
+
+def handler(signum, frame):
+    print("Exited successfully!")
+
+
+def main():
+    # canvas = make_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+    # set_state(canvas, "Running...")
+    #
+    # words = List(canvas, "words", ["he", "his"])
+
+    # wl1 = WhileLoop(canvas, "i < 3")
+    # fl1 = ForEachLoop(canvas, "char", "words", words.list)
+    # i = SmallVar(canvas, 'i', 0, FLASH)
+    # while i.val < 3:
+    #     wl1.mark()
+    #     fl1.update(words.list)
+    #     for word in words.list:
+    #         fl1.visit_next()
+    #     i.plus_equals(1)
+    #     words.append("hey")
+    #     words.count("hey")
+    # wl1.finished()
+    # wl1.__del__()
+    # fl1.__del__()
+    # pause(canvas, SPEED)
+    # words.pop(0)
+    # words.extend("sam")
+
+    # fl2 = ForEachLoop(canvas, "name", "words", words.list)
+    # fl3 = ForEachLoop(canvas, "name", "words", words.list)
+    # fl4 = ForLoopRange(canvas, "ii", 0, 5)
+    # for word in words.list:
+    #     fl2.visit_next()
+    #     fl3.update(words.list)
+    #     for char in words.list:
+    #         fl3.visit_next()
+    #         for ii in range(0, 5):
+    #             fl4.visit_index(ii)
+    # fl2.__del__()
+    # fl3.__del__()
+    # fl4.__del__()
+    # pause(canvas, SPEED)
+
+    # fl5 = ForLoopRange(canvas, "k", 0, 3)
+    # wl2 = WhileLoop(canvas, "while j > 10")
+    # for c in range(0, 3):
+    #     fl5.visit_index(c)
+    #     j = SmallVar(canvas, "j", 15, FLASH)
+    #     while j.val > 10:
+    #         wl2.mark()
+    #         j.minus_equals(1)
+    #     wl2.finished()
+    #     del j
+    # fl5.__del__()
+    # wl2.__del__()
+
+    # fl6 = ForLoopRange(canvas, "i", 0, 5)
+    # wl3 = WhileLoop(canvas, "i < 5")
+    # for j in range(0, 5):
+    #     fl6.visit_index(j)
+    #     i = 0
+    #     while i < 5:
+    #         wl3.mark()
+    #         i += 1
+    #     wl3.finished()
+    # fl6.__del__()
+    # wl3.__del__()
+
+    # string = SmallVar(canvas, "variable", "super long word", FLASH)
+    # string2 = SmallVar(canvas, "new var", "super long wordxxxxxxxxxxxx", FLASH)
+    # string3 = SmallVar(canvas, "new var", "abcdef", FLASH)
+    #
+    # fl7 = ForEachLoop(canvas, "char", "word", string.val)
+    # fl8 = ForEachLoop(canvas, "char", "word", string2.val)
+    # fl9 = ForEachLoop(canvas, "let", "alphabet", string3.val)
+    #
+    # fl7.update(string.val)
+    # for char in string.val:
+    #     print(fl7.fs)
+    #     fl7.visit_next()
+    #
+    # fl8.update(string2.val)
+    # for char2 in string2.val:
+    #     print(fl8.fs)
+    #     fl8.visit_next()
+    #
+    # fl9.update(string3.val)
+    # for char3 in string3.val:
+    #     fl9.visit_next()
+
+    # fl10 = ForEachLoop(canvas, "word", "words", words.list)
+    # fl11 = ForEachLoop(canvas, "char", "word", words.list[0])
+    #
+    # for word in words.list:
+    #     fl10.update(words.list)
+    #     fl10.visit_next()
+    #
+    #     words.pop(0)
+    #     fl10.update(words.list)
+    #     pause(canvas, .2)
+    #
+    #     words.pop(0)
+    #     fl10.update(words.list)
+    #     pause(canvas, .2)
+    #
+    #     words.append("samantha")
+    #     fl10.update(words.list)
+    #     pause(canvas, .2)
+    #
+    #     words.pop(0)
+    #     fl10.update(words.list)
+    #     pause(canvas, .2)
+    #
+    #     fl11.update(word)
+    #     for char in word:
+    #         fl11.visit_next()
+    #
+    # pause(canvas, SPEED)
+    # fl10.__del__()
+    # fl11.__del__()
+    # pause(canvas, SPEED)
+
+    # lists = List(canvas, "list of lists", [[1,1,2], ["Big list please work"]])
+    # fl12 = ForEachLoop(canvas, "list", "list of lists", lists.list)
+    # for item in lists.list:
+    #     fl12.visit_next()
+    #
+    # pause(canvas, SPEED)
+    # fl12.__del__()
+    # pause(canvas, SPEED)
+
+    # fl3 = ForEachLoop(canvas, "long name", "words", "abcdefghijklmnoqprstuvwxyz")
+    # for char in "abcdefghijklmnoqprstuvwxyz":
+    #     fl3.visit_next()
+
+
+        # if not Info.ERROR:
+    #     pause(canvas, FAST)
+    #     set_state(canvas, "Done")
+    # input.close()
+    # tkinter.mainloop()
+
+
+if __name__ == '__main__':
+    signal.signal(signal.SIGINT, handler)
+    main()
+
+
+
+
+#
+# nums = [1, 20, -2, 290]
+# numss = ["hey", "ok"]
+#
+# for num in numss:
+#     i = 0
+#     while i < 2:
+#         nums.append("s")
+#         i += 1
+
+# for num in nums:
+#     first = "first"
+#     for l in nums:
+#         bill = "second"
+#         for j in nums:
+#             bill += "x"
+#             first += "x"
+
+
+# not_biggest = []
+# biggest = 0
+# for i in range(4):
+#     for num in nums:
+#         if num > biggest:
+#             biggest = num
+#         else:
+#             not_biggest.append(num)
+#     other_var = 2
+#     other_var += 10
+
+
+# for i in range(4):
+#     for j in reversed(range(7)):
+#         var = 10
+#         var /= 2
+#         var += 199
+
+# add_to_me = 0
+# for i in range(2):
+#     for j in range(4):
+#         add_to_me += 10
+#         if add_to_me > 40:
+#             add_to_me = -69
+# print("add_to_me = " + str(add_to_me) + "!")

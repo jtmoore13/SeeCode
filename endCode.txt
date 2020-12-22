@@ -1,0 +1,41 @@
+
+    # USER CODE ABOVE #
+
+        if len(lines_1999) > 0:
+            display_lines(canvas, 0, DEFAULT)
+            pause(canvas, SPEED/2)
+
+    except Exception as e:
+        ln = int(format(sys.exc_info()[-1].tb_lineno))
+        this_file = open('translated.py', 'r')
+        lines = this_file.readlines()
+        while "line num =" not in lines[ln-1]:
+            ln += 1
+        error_line = lines[ln-1]
+        last_shown = Info.lines_shown.pop()
+        j = ln
+        while "line num =" + str(last_shown) not in lines[j]:
+            j -= 1
+        line = lines[ln-1]
+        line_num = int(line[line.find("line num =") + 10:].strip())
+        while "line num =" + str(line_num) not in lines[j]:
+            if get_num_indents(lines[j]) == get_num_indents(error_line) and is_elif_statement(lines[j]) \
+                    and "line num =" in lines[j]:
+                temp = lines[j]
+                curr_line_num = int(temp[temp.find("line num =") + 10:].strip())
+                display_lines(canvas, curr_line_num, HIGHLIGHT)
+            j += 1
+        if is_elif_statement(error_line):
+            display_lines(canvas, int(error_line[error_line.find("line num =") + 10:].strip()), HIGHLIGHT)
+        handle_all_errors(canvas, error_line, e)
+
+    if not Info.ERROR:
+        pause(canvas, FAST)
+        set_state(canvas, 'Done', False)
+        show_lines(canvas, lines_1999)
+    tkinter.mainloop()
+
+
+if __name__ == '__main__':
+    signal.signal(signal.SIGINT, handler)
+    main()

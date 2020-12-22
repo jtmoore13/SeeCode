@@ -1,0 +1,65 @@
+from allPurpose import *
+from listClass import List
+from settings import *
+from infoClass import Info
+from smallVarClass import SmallVar
+from loopsClass import ForEachLoop
+from loopsClass import ForLoopRange
+from loopsClass import WhileLoop
+import signal, os, sys
+from tkinter import *
+from random import randint
+from fileHandlers import *
+
+
+# makes the canvas for the animation
+def make_canvas(width, height):
+    top = tkinter.Tk()
+    top.title('SeeCode')
+    canvas = tkinter.Canvas(top, width=width + 1, height=height + 1)
+    canvas.configure(bg=BACKGROUND)
+    canvas.create_line(VAR_SECTION_X, CONTAINER_SECTION_Y, VAR_SECTION_X, CANVAS_HEIGHT, fill='gray20', dash=(4, 4))
+    canvas.create_text((CANVAS_WIDTH+VAR_SECTION_X)/2, VAR_SECTION_Y-10, text='str/int/bool',
+                       font=("Courier", 17, 'italic'), fill='gray35')
+    canvas.create_line(0, CONTAINER_SECTION_Y, CANVAS_WIDTH, CONTAINER_SECTION_Y, fill='gray20', dash=(4, 4))
+    canvas.create_text(15, CONTAINER_SECTION_Y-10, text='lists', font=("Courier", 17, 'italic'),
+                       fill='gray35', anchor=tkinter.W)
+    canvas.create_text(15, 58, text='loops', font=("Courier", 17, 'italic'),
+                       fill='gray35', anchor=tkinter.W)
+    canvas.create_line(CODE_SECTION_X, 0, CODE_SECTION_X, VAR_SECTION_Y, fill='gray20', dash=(4, 4))
+    word = Info.adjectives[randint(0, len(Info.adjectives)-1)]
+    canvas.create_text(CODE_SECTION_X+10, 20, text='Your ' + word + ' code', font=('Courier', 17, 'italic'),
+                       fill='gray50', anchor=tkinter.W)
+    canvas.pack()
+    var = tkinter.IntVar()
+    Info.var = var
+    pause_button = Button(text="Pause", command=pause_b, activeforeground='red', anchor=CENTER, relief=FLAT, borderwidth=14)
+    pause_button.configure(width=5, relief=FLAT)
+    canvas.create_window(CANVAS_WIDTH - 93, 20, anchor=CENTER, window=pause_button)
+    Info.state = canvas.create_oval(CANVAS_WIDTH - 16, 15, CANVAS_WIDTH - 6, 25, fill='green2', outline='green2')
+    Info.button = pause_button
+    play_button = Button(text="Play", command=lambda: Info.var.set(1), activeforeground='green4', anchor=CENTER)
+    play_button.configure(width=4, activebackground="#33B5E5", relief=FLAT)
+    canvas.create_window(CANVAS_WIDTH - 43, 20, anchor=CENTER, window=play_button)
+    return canvas
+
+
+def pause_b():
+    if Info.ERROR:
+        return
+    Info.c.itemconfigure(Info.state, fill='red', outline='red')
+    Info.button.wait_variable(Info.var)
+    Info.c.itemconfigure(Info.state, fill='green2', outline='green2')
+
+
+def handler(signum, frame):
+    pass
+
+
+def main():
+    canvas = make_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+    Info.c = canvas
+    set_state(canvas, "Running...", False)
+    pause(canvas, SPEED/2)
+
+    # USER CODE BELOW #
