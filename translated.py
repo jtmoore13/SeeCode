@@ -129,7 +129,6 @@ def main():
         while "line num =" + str(line_num) not in lines[j]:
             if get_num_indents(lines[j]) == get_num_indents(error_line) and is_elif_statement(lines[j]) \
                     and "line num =" in lines[j]:
-                
                 temp = lines[j]
                 curr_line_num = int(temp[temp.find("line num =") + 10:].strip())
                 display_lines(canvas, curr_line_num, HIGHLIGHT)
